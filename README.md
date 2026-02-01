@@ -9,7 +9,7 @@ Interactive TOEIC Part 5 vocabulary practice web app with pixel-art theme!
 - 📱 Fully responsive
 
 ## 🚀 Live Demo
-👉 [Try it here](https://YOUR_USERNAME.github.io/baecaavocab/)
+👉 [Try it here](https://baecavocab.mynh.space/)
 
 ## 💜 Credits
 Idea by VuNgocHa
