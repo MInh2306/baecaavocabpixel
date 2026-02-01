@@ -296,7 +296,25 @@ body {
     display: flex;
     flex-wrap: wrap;
     gap: 10px;
+
+    max-height: 700px;
+    overflow-y: auto;
+    padding-right: 6px;
 }
+
+.word-list::-webkit-scrollbar {
+    width: 6px;
+}
+
+.word-list::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 4px;
+}
+
+.word-list::-webkit-scrollbar-track {
+    background: #222;
+}
+
 
 .word-item {
     background: white;

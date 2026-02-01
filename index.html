@@ -73,12 +73,13 @@
                         <h3>📚 Hướng dẫn tạo file JSON:</h3>
                         <div class="guide-content">
                             <p><strong>Bước 1:</strong> Tổng hợp từ vựng bạn muốn luyện</p>
+                            <textarea id="vocabInput" rows="4" placeholder="Ví dụ: comply with, participate in, powerful"></textarea>
                             <p><strong>Bước 2:</strong> Dán vào prompt mẫu dưới đây và gửi cho ChatGPT:</p>
                         </div>
 
                         <div class="nes-container is-dark code-box">
-                            <pre>tạo các câu hỏi multiple choice để luyện tiếng anh từ những từ vựng sau đây:
-"List từ của bạn"
+                           <pre id="promptTemplate">tạo các câu hỏi multiple choice để luyện tiếng anh từ những từ vựng sau đây:
+"{{LIST_TU}}"
 
 Trả lại theo format ví dụ sau:
 {
@@ -86,6 +87,8 @@ Trả lại theo format ví dụ sau:
     {
       "type": "multiple",
       "difficulty": "easy",
+      "explanation": "The correct preposition is 'by' because it indicates a deadline.",
+      "translation": "Báo cáo phải được hoàn thành trước thứ Sáu.",
       "question": "The report must be completed _____ Friday.",
       "correct_answer": "by",
       "incorrect_answers": ["until", "during", "while"]
@@ -98,8 +101,12 @@ YÊU CẦU BẮT BUỘC:
 2. Câu hỏi phải tự nhiên, giống đề thi TOEIC thực tế
 3. Correct_answer là từ điền vào chỗ trống
 4. Incorrect_answers là 3 từ gây nhiễu (cùng từ loại hoặc dễ nhầm)
+5. Có thêm phần explanation giải thích đáp án đúng  và translation dịch nghĩa câu hỏi
+6. Chỉ trả lại file JSON có thể tải được ngay
 
-không mark down, không làm gì thêm, chỉ có json file</pre>
+không mark down, không làm gì thêm, chỉ có json file
+</pre>
+
                         </div>
 
                         <div class="guide-content">

@@ -14,7 +14,7 @@ function switchTab(tabName) {
     document.querySelectorAll('.tab-content').forEach(tab => {
         tab.classList.remove('active');
     });
-    
+
     // Remove active class from all tab buttons
     document.querySelectorAll('.tabs .nes-btn').forEach(btn => {
         btn.classList.remove('is-primary');
@@ -22,7 +22,7 @@ function switchTab(tabName) {
 
     // Hiển thị tab được chọn
     document.getElementById(`tab-${tabName}`).classList.add('active');
-    
+
     // Add active class to clicked button
     const clickedBtn = document.getElementById(`tab-${tabName}-btn`);
     if (clickedBtn) {
@@ -136,13 +136,13 @@ async function startQuiz() {
 
     // Setup timer
     timeRemaining = timeLimitMinutes * 60;
-    
+
     // Chuyển sang Screen 2
     switchScreen('screen2');
-    
+
     // Render questions
     renderQuestions();
-    
+
     // Start timer
     startTimer();
 }
@@ -228,7 +228,7 @@ function renderMultipleChoice(question, index) {
  */
 function renderFillInBlank(question, index) {
     const inputDiv = document.createElement('div');
-    
+
     const input = document.createElement('input');
     input.type = 'text';
     input.className = 'nes-input fill-input';
@@ -247,7 +247,7 @@ function renderFillInBlank(question, index) {
 function renderWordBank() {
     const wordBank = document.getElementById('wordBank');
     const wordList = document.getElementById('wordList');
-    
+
     wordBank.style.display = 'block';
     wordList.innerHTML = '';
 
@@ -270,7 +270,7 @@ function renderWordBank() {
  */
 function startTimer() {
     const timerDisplay = document.getElementById('timer');
-    
+
     // Clear existing timer nếu có
     if (timerInterval) {
         clearInterval(timerInterval);
@@ -325,7 +325,7 @@ function displayResults() {
     currentQuestions.forEach((question, index) => {
         const userAnswer = currentAnswers[index];
         const correctAnswer = question.correct_answer;
-        
+
         // Check answer - trim spaces cho fill-in-blank
         let isCorrect = false;
         if (currentQuizType === 'fill') {
@@ -353,10 +353,19 @@ function displayResults() {
         questionText.className = 'question-text';
         questionText.textContent = question.question;
 
+        const explaination = document.createElement('div');
+        explaination.className = 'explanation';
+        explaination.textContent = question.explanation ? `Explanation: ${question.explanation}` : '';
+
+        const translation = document.createElement('div');
+        translation.className = 'translation';
+        translation.textContent = question.translation ? `Translation: ${question.translation}` : '';
+
         card.appendChild(status);
         card.appendChild(questionNum);
         card.appendChild(questionText);
-
+        card.appendChild(explaination);
+        card.appendChild(translation);
         // Show user answer
         const userAnswerDiv = document.createElement('div');
         userAnswerDiv.className = 'user-answer';
@@ -390,11 +399,11 @@ function switchScreen(screenId) {
  */
 function goHome() {
     switchScreen('screen1');
-    
+
     // Reset form
     document.getElementById('jsonFile').value = '';
     clearError();
-    
+
     // Clear current data
     currentQuestions = [];
     currentAnswers = {};
@@ -416,19 +425,34 @@ function retryQuiz() {
     // Setup timer
     const timeLimitMinutes = parseInt(document.getElementById('timeLimit').value);
     timeRemaining = timeLimitMinutes * 60;
-    
+
     // Chuyển sang Screen 2
     switchScreen('screen2');
-    
+
     // Render questions
     renderQuestions();
-    
+
     // Start timer
     startTimer();
 }
 
+
+// Dynamic prompt template update
+const vocabInput = document.getElementById("vocabInput");
+const promptTemplate = document.getElementById("promptTemplate");
+
+const originalTemplate = promptTemplate.textContent;
+
+vocabInput.addEventListener("input", () => {
+    const value = vocabInput.value.trim() || "List từ của bạn";
+    promptTemplate.textContent = originalTemplate.replace(
+        "{{LIST_TU}}",
+        value
+    );
+});
+
 // Initialize active tab on load
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     const mainTabBtn = document.getElementById('tab-main-btn');
     if (mainTabBtn) {
         mainTabBtn.classList.add('is-primary');
