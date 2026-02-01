@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BaeCaaVocab - TOEIC Part 5 Practice</title>
+
+    <!-- NES.css -->
+    <link href="https://unpkg.com/nes.css@latest/css/nes.min.css" rel="stylesheet" />
+
+    <!-- Google Font for pixel style -->
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="style.css">
+    <script src="scripts.js" defer></script>
+</head>
+
+<body>
+    <div class="wrapper">
+        <div class="container nes-container is-rounded">
+            <!-- SCREEN 1: Setup -->
+            <div id="screen1" class="screen active">
+                <div class="intro">
+                    <h1 class="title">BaeCaaVocab</h1>
+                    <p class="subtitle">Interactive Vocab Practice Web</p>
+                    <p class="subtitle-small">(Idea from VuNgocHa aka my bae 💜)</p>
+                    <div class="logo-container">
+                        <img src="picture/titlepic.jpeg" alt="BaeCaaVocab Logo" class="logo nes-container is-rounded"
+                            id="logoImage">
+                    </div>
+                </div>
+
+                <!-- Tabs -->
+                <div class="tabs">
+                    <button class="nes-btn" onclick="switchTab('main')" id="tab-main-btn">Main</button>
+                    <button class="nes-btn" onclick="switchTab('guide')" id="tab-guide-btn">Guide</button>
+                </div>
+
+                <!-- Tab 1: Main Screen -->
+                <div id="tab-main" class="tab-content active">
+                    <div id="error-message"></div>
+
+                    <div class="nes-field form-group">
+                        <label for="jsonFile">📁 Import JSON File:</label>
+                        <input type="file" id="jsonFile" accept=".json" class="nes-input">
+                    </div>
+
+                    <div class="nes-field form-group">
+                        <label for="timeLimit">⏱️ Time Limit (minutes):</label>
+                        <input type="number" id="timeLimit" min="1" max="120" value="15" placeholder="Enter time"
+                            class="nes-input">
+                    </div>
+
+                    <div class="nes-field form-group">
+                        <label for="quizType">📝 Quiz Type:</label>
+                        <div class="nes-select">
+                            <select id="quizType">
+                                <option value="multiple">Multiple Choice</option>
+                                <option value="fill">Fill in the Blank</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="button-group">
+                        <button class="nes-btn is-primary" onclick="startQuiz()">Start Practice</button>
+                    </div>
+                </div>
+
+                <!-- Tab 2: Guide -->
+                <div id="tab-guide" class="tab-content">
+                    <div class="nes-container is-rounded guide-box">
+                        <h3>📚 Hướng dẫn tạo file JSON:</h3>
+                        <div class="guide-content">
+                            <p><strong>Bước 1:</strong> Tổng hợp từ vựng bạn muốn luyện</p>
+                            <p><strong>Bước 2:</strong> Dán vào prompt mẫu dưới đây và gửi cho ChatGPT:</p>
+                        </div>
+
+                        <div class="nes-container is-dark code-box">
+                            <pre>tạo các câu hỏi multiple choice để luyện tiếng anh từ những từ vựng sau đây:
+"List từ của bạn"
+
+Trả lại theo format ví dụ sau:
+{
+  "results": [
+    {
+      "type": "multiple",
+      "difficulty": "easy",
+      "question": "The report must be completed _____ Friday.",
+      "correct_answer": "by",
+      "incorrect_answers": ["until", "during", "while"]
+    }
+  ]
+}
+
+YÊU CẦU BẮT BUỘC:
+1. Mỗi câu hỏi PHẢI có dấu gạch dưới "___" để trống chỗ điền từ
+2. Câu hỏi phải tự nhiên, giống đề thi TOEIC thực tế
+3. Correct_answer là từ điền vào chỗ trống
+4. Incorrect_answers là 3 từ gây nhiễu (cùng từ loại hoặc dễ nhầm)
+
+không mark down, không làm gì thêm, chỉ có json file</pre>
+                        </div>
+
+                        <div class="guide-content">
+                            <p><strong>Bước 3:</strong> Copy JSON từ ChatGPT, lưu vào file .json</p>
+                            <p><strong>Bước 4:</strong> Import file vào tab "Main" và bắt đầu luyện tập!</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SCREEN 2: Quiz -->
+            <div id="screen2" class="screen">
+                <h1 class="title">Practice Time! 📝</h1>
+
+                <div class="nes-container is-rounded timer-container">
+                    <p class="timer" id="timer">15:00</p>
+                </div>
+
+                <!-- Word Bank (only for fill-in-the-blank) -->
+                <div id="wordBank" class="word-bank nes-container is-rounded" style="display: none;">
+                    <h3 class="word-bank-title">Word Bank</h3>
+                    <div class="word-list" id="wordList"></div>
+                </div>
+
+                <div id="questionsContainer"></div>
+
+                <div class="button-group">
+                    <button class="nes-btn is-success" onclick="submitQuiz()">Submit Answers</button>
+                </div>
+            </div>
+
+            <!-- SCREEN 3: Results -->
+            <div id="screen3" class="screen">
+                <h1 class="title">Results 🎯</h1>
+
+                <div class="nes-container is-rounded result-summary">
+                    <h2>Your Score</h2>
+                    <div class="score" id="scoreDisplay">0/0</div>
+                    <p id="scorePercentage" class="percentage"></p>
+                </div>
+
+                <div id="resultsContainer"></div>
+
+                <div class="button-group">
+                    <button class="nes-btn" onclick="goHome()">
+                        <i class="nes-icon trophy is-small"></i> Home
+                    </button>
+                    <button class="nes-btn is-primary" onclick="retryQuiz()">
+                        <i class="nes-icon coin is-small"></i> Try Again
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pixel decorations -->
+    <!-- <div class="pixel-decorations">
+        <i class="nes-icon star is-small decoration-star"></i>
+        <i class="nes-icon heart is-small decoration-heart"></i>
+    </div> -->
+
+</body>
+
+</html>

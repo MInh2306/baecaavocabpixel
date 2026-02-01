@@ -1,0 +1,521 @@
+/* Import Press Start 2P font for pixel style */
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Press Start 2P', cursive;
+    background: #212529;
+    background-image:
+        repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0, 0, 0, .2) 2px, rgba(0, 0, 0, .2) 4px),
+        linear-gradient(90deg, #1e3a8a 0%, #7c3aed 100%);
+    min-height: 100vh;
+    padding: 20px;
+    margin: 0;
+    /* ← Ensure no margin */
+    position: relative;
+    overflow-x: hidden;
+    box-sizing: border-box;
+    /* ← Include padding in width calculation */
+}
+
+/* Pixel decorations */
+.pixel-decorations {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1;
+    pointer-events: none;
+}
+
+.decoration-star {
+    animation: float 3s ease-in-out infinite;
+}
+
+.decoration-heart {
+    animation: float 3s ease-in-out infinite 1.5s;
+    margin-left: 20px;
+}
+
+@keyframes float {
+
+    0%,
+    100% {
+        transform: translateY(0px);
+    }
+
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+/* Wrapper để căn giữa container */
+.wrapper {
+    max-width: 900px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+.container {
+    max-width: 900px !important;
+    width: 100% !important;
+    margin: 0 auto !important;
+    display: block !important;
+    /* Force block display - NES.css might use inline-block */
+    background: white;
+    padding: 30px !important;
+    position: relative;
+    z-index: 2;
+}
+
+/* Title & Intro */
+.intro {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.title {
+    font-size: 24px;
+    color: #212529;
+    margin-bottom: 20px;
+    text-shadow: 4px 4px 0px #d946ef;
+    line-height: 1.5;
+}
+
+.subtitle {
+    font-size: 12px;
+    color: #666;
+    margin-bottom: 10px;
+    line-height: 1.8;
+}
+
+.subtitle-small {
+    font-size: 10px;
+    color: #999;
+    margin-bottom: 20px;
+    line-height: 1.8;
+}
+
+/* Logo Container */
+.logo-container {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+}
+
+.logo {
+    max-width: 250px;
+    width: 100%;
+    height: auto;
+    image-rendering: pixelated;
+    image-rendering: -moz-crisp-edges;
+    image-rendering: crisp-edges;
+    transition: transform 0.3s ease;
+}
+
+.logo:hover {
+    transform: scale(1.05);
+}
+
+/* Screens */
+.screen {
+    display: none;
+}
+
+.screen.active {
+    display: block;
+}
+
+/* Tabs */
+.tabs {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 30px;
+    justify-content: center;
+}
+
+.tabs .nes-btn {
+    font-size: 10px;
+}
+
+.tab-content {
+    display: none;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+/* Form Elements */
+.form-group {
+    margin-bottom: 25px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 12px;
+    font-size: 12px;
+    color: #212529;
+}
+
+.nes-input,
+.nes-select select {
+    font-family: 'Press Start 2P', cursive;
+    font-size: 10px;
+}
+
+/* Buttons */
+.button-group {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    margin-top: 30px;
+    flex-wrap: wrap;
+}
+
+.nes-btn {
+    font-size: 12px;
+}
+
+/* Error Messages */
+.error {
+    margin-bottom: 20px;
+}
+
+.error::before {
+    content: "⚠️ ";
+}
+
+/* Timer */
+.timer-container {
+    text-align: center;
+    margin-bottom: 30px;
+    background: #fef3c7 !important;
+}
+
+.timer {
+    font-size: 20px;
+    color: #212529;
+    margin: 0;
+    padding: 10px;
+}
+
+.timer.warning {
+    color: #dc2626;
+    animation: blink 1s infinite;
+}
+
+@keyframes blink {
+
+    0%,
+    49% {
+        opacity: 1;
+    }
+
+    50%,
+    100% {
+        opacity: 0.3;
+    }
+}
+
+/* Question Cards */
+.question-card {
+    margin-bottom: 25px;
+}
+
+.question-number {
+    font-size: 12px;
+    color: #7c3aed;
+    margin-bottom: 12px;
+    font-weight: bold;
+}
+
+.question-text {
+    font-size: 11px;
+    margin-bottom: 15px;
+    line-height: 1.8;
+    color: #212529;
+}
+
+/* Multiple Choice Options */
+.options {
+    display: grid;
+    gap: 12px;
+}
+
+.option {
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.option:hover {
+    transform: translateX(5px);
+}
+
+.option input[type="radio"] {
+    margin-right: 15px;
+    cursor: pointer;
+}
+
+.option label {
+    cursor: pointer;
+    font-size: 10px;
+    line-height: 1.6;
+    display: flex;
+    align-items: center;
+}
+
+/* Fill in the Blank */
+.fill-input {
+    font-family: 'Press Start 2P', cursive;
+    font-size: 11px;
+    padding: 10px;
+}
+
+/* Word Bank */
+.word-bank {
+    position: fixed;
+    right: 20px;
+    top: 20px;
+    max-width: 220px;
+    z-index: 100;
+    background: #fef3c7 !important;
+}
+
+.word-bank-title {
+    font-size: 12px;
+    color: #212529;
+    margin-bottom: 15px;
+}
+
+.word-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.word-item {
+    background: white;
+    padding: 8px 12px;
+    border: 2px solid #212529;
+    font-size: 9px;
+    color: #7c3aed;
+    box-shadow: 4px 4px 0px #212529;
+}
+
+/* Results Screen */
+.result-summary {
+    text-align: center;
+    margin-bottom: 30px;
+    background: #dbeafe !important;
+}
+
+.result-summary h2 {
+    font-size: 16px;
+    margin-bottom: 20px;
+    color: #212529;
+}
+
+.score {
+    font-size: 36px;
+    color: #7c3aed;
+    margin: 20px 0;
+    text-shadow: 4px 4px 0px #d946ef;
+}
+
+.percentage {
+    font-size: 12px;
+    color: #666;
+    margin-top: 10px;
+}
+
+/* Result Cards */
+.result-card {
+    margin-bottom: 20px;
+}
+
+.result-card.correct {
+    background: #dcfce7 !important;
+}
+
+.result-card.incorrect {
+    background: #fee2e2 !important;
+}
+
+.answer-status {
+    font-size: 12px;
+    margin-bottom: 12px;
+    font-weight: bold;
+}
+
+.answer-status.correct {
+    color: #16a34a;
+}
+
+.answer-status.incorrect {
+    color: #dc2626;
+}
+
+.user-answer {
+    font-size: 10px;
+    line-height: 1.8;
+    margin-top: 12px;
+    padding: 12px;
+    background: white;
+    border: 2px solid #212529;
+}
+
+/* Guide Section */
+.guide-box {
+    background: #f0fdf4 !important;
+    font-family: Arial, sans-serif;
+    /* ← Override pixel font */
+}
+
+.guide-box h3 {
+    font-size: 16px;
+    /* Tăng size vì font bình thường nhỏ hơn */
+    color: #212529;
+    margin-bottom: 20px;
+    font-family: Arial, sans-serif;
+}
+
+.guide-content p {
+    font-size: 14px;
+    /* Tăng từ 10px lên 14px */
+    line-height: 1.6;
+    /* Giảm line-height cho dễ đọc hơn */
+    margin-bottom: 15px;
+    color: #212529;
+    font-family: Arial, sans-serif;
+}
+
+.guide-content strong {
+    font-family: Arial, sans-serif;
+}
+
+.code-box {
+    margin: 20px 0;
+    overflow-x: auto;
+    font-family: 'Courier New', monospace;
+    /* Monospace cho code */
+}
+
+.code-box pre {
+    font-size: 12px;
+    /* Tăng từ 8px lên 12px */
+    line-height: 1.6;
+    color: #00ff00;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    font-family: 'Courier New', monospace;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    body {
+        padding: 10px;
+    }
+
+    .container {
+        padding: 20px !important;
+    }
+
+    .title {
+        font-size: 18px;
+    }
+
+    .subtitle {
+        font-size: 10px;
+    }
+
+    .subtitle-small {
+        font-size: 8px;
+    }
+
+    .logo {
+        max-width: 200px;
+    }
+
+    .word-bank {
+        position: static;
+        margin-bottom: 20px;
+        max-width: 100%;
+    }
+
+    .nes-btn {
+        font-size: 10px;
+        padding: 8px 16px;
+    }
+
+    .score {
+        font-size: 28px;
+    }
+
+    .pixel-decorations {
+        display: none;
+    }
+}
+
+@media (max-width: 480px) {
+    .title {
+        font-size: 14px;
+    }
+
+    .logo {
+        max-width: 150px;
+    }
+
+    .tabs {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .tabs .nes-btn {
+        font-size: 9px;
+    }
+
+    .score {
+        font-size: 24px;
+    }
+
+    .code-box pre {
+        font-size: 7px;
+    }
+}
+
+/* Additional NES.css overrides for better pixel aesthetic */
+.nes-container.is-rounded {
+    border-image-repeat: stretch;
+}
+
+/* Smooth transitions */
+.nes-btn,
+.option,
+.logo {
+    transition: all 0.2s ease;
+}
+
+/* Custom scrollbar for pixel theme */
+::-webkit-scrollbar {
+    width: 12px;
+    height: 12px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border: 2px solid #212529;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #7c3aed;
+    border: 2px solid #212529;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #6d28d9;
+}
